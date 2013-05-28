@@ -178,5 +178,36 @@ namespace Little_Man_Computer
                 LMC.Reset();
             }
         }
+        public void SetAC(ushort n)
+        {
+            lblAC.Text = n.ToString();
+        }
+
+        private void btnStep_Click(object sender, EventArgs e)
+        {
+            if (errors.Count>0) 
+            {
+                AddError(255,"You can't run the LMC if there's syntax errors!");
+                return;
+            }
+
+            if (LMC.Running)
+            {
+                try
+                {
+                    LMC.Step();
+                }
+                catch (Exception exept)
+                {
+                    edtMessages.Text = exept.Message;
+                }
+            }
+            else
+            {
+                LMC.Begin();
+               
+            }
+            GridRAM.CurrentCell = GridRAM[0, LMC.IR];
+        }
     }
 }

@@ -28,11 +28,12 @@ namespace Little_Man_Computer
                 case 5: AC = RAM[address]; break;
                 case 6: IR = address; break;
                 case 7: if (AC == 0) IR = address; break;
-                case 8: if (AC > 500) IR = address; break;
+                case 8: if (AC < 500) IR = address; break;
                 case 9: if (address == 1) { AC = ushort.Parse(Interaction.InputBox("Please enter a number!", "IN", "0")); }
                     else if (address == 2) { Interaction.MsgBox(AC, MsgBoxStyle.OkOnly, "OUT"); } break;
                 default: throw new Exception(string.Format("HALT: invalid opcode reached at address {0}", IR - 1));
             }
+            Program.form1.SetAC(AC);
         }
 
         public void Begin()
