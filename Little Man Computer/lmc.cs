@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.VisualBasic;
 
 namespace Little_Man_Computer
 {
@@ -19,32 +20,36 @@ namespace Little_Man_Computer
 
             switch (instruction / 100)
             {
-                case 0: if (address == 0) Running = false; break;
+                case 0: if (address == 0) { Running = false; IR--; } else throw new Exception(string.Format("HALT: invalid opcode reached at address {0}", IR - 1)); break;
                 case 1: AC += RAM[address]; break;
                 case 2: AC -= RAM[address]; break;
-                case 3: RAM[address] = AC; break;
+                case 3: RAM[address] = AC; Program.form1.PutInRAM(address, RAM[address]); break;
                 case 4: break;
                 case 5: AC = RAM[address]; break;
                 case 6: IR = address; break;
                 case 7: if (AC == 0) IR = address; break;
                 case 8: if (AC > 500) IR = address; break;
-                case 9: if (address == 1) { /*AC = input;*/}
-                    else if (address == 2) {/*out(AC);*/}break;
+                case 9: if (address == 1) { AC = ushort.Parse(Interaction.InputBox("Please enter a number!", "IN", "0")); }
+                    else if (address == 2) { Interaction.MsgBox(AC, MsgBoxStyle.OkOnly, "OUT"); } break;
                 default: throw new Exception(string.Format("HALT: invalid opcode reached at address {0}", IR - 1));
             }
-            
         }
 
         public void Begin()
         {
             IR = 0;
+            AC = 0;
             Running = true;
+        }
+        public void Reset()
+        {
+            Running = false;
         }
     }
 
     static class Mnemonic
     {
-        static ushort ToByteCode(string instruction)
+        static public ushort ToByteCode(string instruction)
         {
             instruction = instruction.ToUpper();
             string[] parts = instruction.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -93,8 +98,8 @@ namespace Little_Man_Computer
                     case "ADD": return (ushort)(100 + address);
                     case "SUB": return (ushort)(200 + address);
                     case "STO": return (ushort)(300 + address);
-                    case "LDA": return (ushort)(400 + address);
-                    case "BRA": return (ushort)(600 + address);
+                    case "LDA": return (ushort)(500 + address);
+                    case "BR": return (ushort)(600 + address);
                     case "BRZ": return (ushort)(700 + address);
                     case "BRP": return (ushort)(800 + address);
                     default: throw new Exception("Invalid opcode " + parts[0]);

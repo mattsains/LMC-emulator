@@ -7,6 +7,7 @@ namespace Little_Man_Computer
 {
     static class Program
     {
+        public static Form1 form1;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -15,7 +16,8 @@ namespace Little_Man_Computer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            form1 = new Form1();
+            Application.Run(form1);
         }
     }
 }

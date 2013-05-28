@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.GridRAM = new System.Windows.Forms.DataGridView();
             this.ADR = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,11 +55,11 @@
             this.GridRAM.AllowUserToDeleteRows = false;
             this.GridRAM.AllowUserToResizeColumns = false;
             this.GridRAM.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            this.GridRAM.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.GridRAM.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            this.GridRAM.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            this.GridRAM.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.GridRAM.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.GridRAM.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.GridRAM.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -75,6 +75,7 @@
             this.GridRAM.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.GridRAM.Size = new System.Drawing.Size(218, 280);
             this.GridRAM.TabIndex = 0;
+            this.GridRAM.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridRAM_CellContentClick);
             this.GridRAM.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridRAM_CellEndEdit);
             // 
             // ADR
@@ -97,16 +98,19 @@
             this.btnRun.TabIndex = 1;
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // edtMessages
             // 
-            this.edtMessages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.edtMessages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.edtMessages.BackColor = System.Drawing.SystemColors.Control;
             this.edtMessages.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.edtMessages.Location = new System.Drawing.Point(258, 11);
             this.edtMessages.Name = "edtMessages";
+            this.edtMessages.ReadOnly = true;
             this.edtMessages.Size = new System.Drawing.Size(376, 312);
-            this.edtMessages.TabIndex = 2;
+            this.edtMessages.TabIndex = 1;
             this.edtMessages.Text = resources.GetString("edtMessages.Text");
             // 
             // btnStep
@@ -121,8 +125,8 @@
             // 
             // lblAC
             // 
-            this.lblAC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblAC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblAC.BackColor = System.Drawing.Color.CornflowerBlue;
             this.lblAC.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblAC.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -174,6 +178,7 @@
             this.btnClear.TabIndex = 10;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnSave
             // 
@@ -186,9 +191,9 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.lblAC);
@@ -198,7 +203,7 @@
             this.panel1.Location = new System.Drawing.Point(12, 11);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(238, 390);
-            this.panel1.TabIndex = 11;
+            this.panel1.TabIndex = 0;
             // 
             // panel2
             // 
@@ -224,6 +229,7 @@
             this.Name = "Form1";
             this.Text = "Little Man";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.VisibleChanged += new System.EventHandler(this.Form1_VisibleChanged);
             ((System.ComponentModel.ISupportInitialize)(this.GridRAM)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -233,7 +239,6 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView GridRAM;
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.RichTextBox edtMessages;
         private System.Windows.Forms.Button btnStep;
@@ -247,6 +252,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridViewTextBoxColumn ADR;
         private System.Windows.Forms.DataGridViewTextBoxColumn DATA;
+        private System.Windows.Forms.DataGridView GridRAM;
     }
 }
 
