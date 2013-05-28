@@ -40,6 +40,7 @@ namespace Little_Man_Computer
         private void GridRAM_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             edtMessages.Clear();
+            errors = new SortedDictionary<byte, string>();
             labels = new Dictionary<string, byte>();
             for (byte addr = 0; addr < 100; addr++)
             {
@@ -174,9 +175,9 @@ namespace Little_Man_Computer
             for (int i = 0; i < 100; i++)
             {
                 GridRAM[1, i].Value = "";
-                LMC.RAM[i] = 0;
-                LMC.Reset();
+                LMC.RAM[i] = 0;   
             }
+            LMC.Reset();
         }
         public void SetAC(ushort n)
         {
@@ -200,6 +201,8 @@ namespace Little_Man_Computer
                 catch (Exception exept)
                 {
                     edtMessages.Text = exept.Message;
+                    LMC.Reset();
+                    return;//don't update grid
                 }
             }
             else
@@ -208,6 +211,49 @@ namespace Little_Man_Computer
                
             }
             GridRAM.CurrentCell = GridRAM[0, LMC.IR];
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog s = new SaveFileDialog();
+            s.Filter = "Little Man computer|*.lmc|Text Document|*.txt";
+
+            s.AddExtension = true;
+            DialogResult result=s.ShowDialog(this);
+
+            if (result == DialogResult.OK)
+            {
+                StreamWriter SW = new StreamWriter(s.FileName);
+                int i;
+                for (i = 0; i < 100; i++)
+                {
+                    string line=(string)GridRAM[1,i].Value;
+                    if (line == null)
+                        break;
+                    else SW.WriteLine(line);
+                }
+                //now we have to shift this in manually
+                bool hasEntered = false;
+                for (; i < 100; i++)
+                {
+                    string line = (string)GridRAM[1, i].Value;
+                    if (line == null)
+                    {
+                        if (!hasEntered)
+                        {
+                            hasEntered = true;
+                            SW.WriteLine();
+                        }
+                        continue;
+                    }
+                    else
+                    {
+                        SW.WriteLine(i + " " + line);
+                        hasEntered = false;
+                    }
+                }
+                SW.Close();
+            }
         }
     }
 }
